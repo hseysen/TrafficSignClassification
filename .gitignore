@@ -1,5 +1,5 @@
 template
-datasets/demo_dataset
+datasets/TrafficSign
 *pth
 __pycache__
 runs
