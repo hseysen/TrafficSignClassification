@@ -4,3 +4,4 @@ datasets/TrafficSign
 __pycache__
 runs
 venv/
+tmp/
