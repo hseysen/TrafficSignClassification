@@ -23,9 +23,17 @@ class DataAugmentator:
         image.save(filename)
     
     def test_one_image(self, test_image_path="datasets/TrafficSign/DATA/0/000_1_0001.png"):
+        # Save the original image for reference
         test_image = Image.open(test_image_path)
-        result = self.rotate_image(test_image)
-        result.save("test.png")
+        test_image.save("tmp/original_image.png")
+
+        # Test rotation
+        result1 = self.rotate_image(test_image)
+        result1.save("tmp/rotation_augmentation.png")
+
+        # Test Scaling
+        result2 = self.scale_image(test_image)
+        result2.save("tmp/scale_augmentation.png")
 
 
 
