@@ -21,8 +21,14 @@ class DataAugmentator:
 
     def save_transformed_image(self, image, filename):
         image.save(filename)
+    
+    def test_one_image(self, test_image_path="datasets/TrafficSign/DATA/0/000_1_0001.png"):
+        test_image = Image.open(test_image_path)
+        result = self.rotate_image(test_image)
+        result.save("test.png")
+
 
 
 if __name__ == "__main__":
-    print("unimplemented")
+    DataAugmentator().test_one_image()
     
