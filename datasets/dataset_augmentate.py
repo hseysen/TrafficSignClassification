@@ -75,7 +75,7 @@ class DataAugmentator:
                 target_image = Image.open(os.path.join(folderdir, image_choice))
                 target_augmentation = random.choice(augmentation_pool)
                 augment = target_augmentation(target_image)
-                augment.save(os.path.join(folderdir, f"aug_{class_id:0>3}_{image_choice[:image_choice.find(".png")]}_n{i:0>4}.png"))
+                augment.save(os.path.join(folderdir, f"aug_{class_id:0>3}_{image_choice[:image_choice.find('.png')]}_n{i:0>4}.png"))
                 del target_image
     
     def deaugmentate(self):
