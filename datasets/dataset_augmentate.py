@@ -41,7 +41,7 @@ class DataAugmentator:
     def save_transformed_image(self, image, filename):
         image.save(filename)
     
-    def test_one_image(self, test_image_path="datasets/TrafficSign/DATA/0/000_1_0001.png"):
+    def test_one_image(self, test_image_path="datasets/TrafficSign/DATA/0/000_0001.png"):
         # Save the original image for reference
         test_image = Image.open(test_image_path)
         test_image.save("tmp/original_image.png")
