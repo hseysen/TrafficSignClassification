@@ -1,6 +1,16 @@
 import os
 import random
+import numpy as np
+import cv2
 from PIL import Image, ImageOps
+
+
+def to_cv2(pil_image):
+    return cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
+
+
+def from_cv2(cv2_image):
+    return Image.fromarray(cv2.cvtColor(cv2_image, cv2.COLOR_BGR2RGB))
 
 
 class DataAugmentator:
