@@ -15,7 +15,7 @@ class TrafficSignDataset(Dataset):
         self.transforms = transforms
 
         # Select split
-        self.folder = os.path.join(self.root, self.mode.upper())
+        self.folder = os.path.join(self.root, self.mode)
 
         # Initialize lists
         self.image_list = []
@@ -44,7 +44,10 @@ class TrafficSignDataset(Dataset):
         if(self.transforms):
             image = self.transforms(image)
         else:
-            tr = transforms.Compose([transforms.ToTensor()])
+            tr = transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Resize([224, 224])
+            ])
             image = tr(image)
 
         return image, label
