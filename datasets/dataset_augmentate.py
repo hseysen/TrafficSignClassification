@@ -22,6 +22,22 @@ class DataAugmentator:
         angle = random.randint(rotation_range[0], rotation_range[1])
         return image.rotate(angle)
 
+    def adjust_perspective(self, image):
+        w, h = image.size
+        distortion_factor = 0.25
+        dx1 = w * random.uniform(-distortion_factor, distortion_factor)
+        dx2 = w * random.uniform(-distortion_factor, distortion_factor)
+        dy1 = h * random.uniform(-distortion_factor, distortion_factor)
+        dy2 = h * random.uniform(-distortion_factor, distortion_factor)
+
+        pts1 = np.float32([[0, 0], [w, 0], [0, h], [w, h]])
+        pts2 = np.float32([[dx1, dy1], [w - dx1, dy2], [dx2, h - dy1], [w - dx2, h - dy2]])
+        M = cv2.getPerspectiveTransform(pts1, pts2)
+
+        orig_image = to_cv2(image)
+        transformed_image = cv2.warpPerspective(orig_image, M, (w, h))
+        return from_cv2(transformed_image)
+
     def save_transformed_image(self, image, filename):
         image.save(filename)
     
@@ -33,6 +49,10 @@ class DataAugmentator:
         # Test rotation
         result1 = self.rotate_image(test_image)
         result1.save("tmp/rotation_augmentation.png")
+
+        # Test perspective
+        result1 = self.adjust_perspective(test_image)
+        result1.save("tmp/perspective_augmentation.png")
 
 
 if __name__ == "__main__":
