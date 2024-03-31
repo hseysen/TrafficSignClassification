@@ -6,7 +6,7 @@ class DataSplitter:
         self.root = "datasets/TrafficSign"
         self.datadir = os.path.join(self.root, "DATA")
 
-    def view_instances(self):
+    def split_dataset(self):
         for cls in os.listdir(self.datadir):
             clsdir = os.path.join(self.datadir, cls)
             print(len(os.listdir(clsdir)), "instances for", cls)
