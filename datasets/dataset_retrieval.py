@@ -15,7 +15,7 @@ class TrafficSignDataset(Dataset):
         self.transforms = transforms
 
         # Select split
-        self.folder = os.path.join(self.root, self.mode)
+        self.folder = os.path.join(self.root, self.mode.upper())
 
         # Initialize lists
         self.image_list = []
