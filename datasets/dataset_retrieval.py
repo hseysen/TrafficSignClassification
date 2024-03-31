@@ -4,10 +4,11 @@ from PIL import Image
 import torch
 import torch.nn
 from torch.utils.data import Dataset
+from torchvision import transforms
 
 
-class custom_dataset(Dataset):
-    def __init__(self, mode="train", root="datasets/demo_dataset", transforms=None):
+class TrafficSignDataset(Dataset):
+    def __init__(self, mode="train", root="datasets/TrafficSign", transforms=None):
         super().__init__()
         self.mode = mode
         self.root = root
@@ -42,6 +43,9 @@ class custom_dataset(Dataset):
         image = Image.open(image_name)
         if(self.transforms):
             image = self.transforms(image)
+        else:
+            tr = transforms.Compose([transforms.ToTensor()])
+            image = tr(image)
 
         return image, label
 
