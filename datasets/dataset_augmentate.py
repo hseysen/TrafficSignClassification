@@ -56,20 +56,18 @@ class DataAugmentator:
     
     def augmentate_whole_set(self):
         augmentation_pool = [self.rotate_image, self.adjust_perspective]
-        rootdir = os.path.join("datasets", "TrafficSign")
 
         # Initialize class counts
         class_counts = np.array([0] * 58)               # Total number of classes
 
-        current_dir = os.path.join(rootdir, "DATA")
-        for folder in os.listdir(current_dir):
-            folderdir = os.path.join(current_dir, folder)
+        for folder in os.listdir(self.datadir):
+            folderdir = os.path.join(self.datadir, folder)
             class_counts[int(folder)] = len(os.listdir(folderdir))
         class_ids = list(*np.where(class_counts != 0))
         required_augmentations = 250 - class_counts
 
         for class_id in class_ids:
-            folderdir = os.path.join(current_dir, str(class_id))
+            folderdir = os.path.join(self.datadir, str(class_id))
             augs = required_augmentations[class_id]
             image_pool = os.listdir(folderdir)
             for i in range(augs):
@@ -80,11 +78,8 @@ class DataAugmentator:
                 del target_image
     
     def deaugmentate(self):
-        rootdir = os.path.join("datasets", "TrafficSign")
-
-        current_dir = os.path.join(rootdir, "DATA")
-        for folder in os.listdir(current_dir):
-            folderdir = os.path.join(current_dir, folder)
+        for folder in os.listdir(self.datadir):
+            folderdir = os.path.join(self.datadir, folder)
             for image in os.listdir(folderdir):
                 if "aug" in image:
                     imagedir = os.path.join(folderdir, image)
