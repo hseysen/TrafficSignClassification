@@ -21,7 +21,7 @@ class DataAugmentator:
     def rotate_image(self, image, rotation_range=(-15, 15)):
         angle = random.randint(rotation_range[0], rotation_range[1])
         return image.rotate(angle)
-
+    
     def adjust_perspective(self, image):
         w, h = image.size
         distortion_factor = 0.25
