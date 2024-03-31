@@ -27,8 +27,3 @@ if __name__ == "__main__":
                 os.remove(imagedir)
             print(f"Removing:\t{folderdir}")
             os.rmdir(folderdir)      
-
-
-    
-    plt.bar(range(58), class_counts)
-    plt.show()
