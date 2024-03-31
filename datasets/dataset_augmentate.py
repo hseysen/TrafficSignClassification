@@ -8,7 +8,7 @@ class DataAugmentator:
         self.root = "datasets/TrafficSign"
         self.datadir = os.path.join(self.root, "DATA")
 
-    def rotate_image(self, image, rotation_range=(-55, 55)):
+    def rotate_image(self, image, rotation_range=(-15, 15)):
         angle = random.randint(rotation_range[0], rotation_range[1])
         return image.rotate(angle)
 
