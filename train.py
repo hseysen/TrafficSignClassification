@@ -116,7 +116,7 @@ def main():
     tr = transforms.Compose([
         transforms.ToTensor(),
         transforms.Resize([224, 224]),
-        transforms.Normalize(mean=mean, std=stdv)
+        # transforms.Normalize(mean=mean, std=stdv)
     ])
 
     train_data = TrafficSignDataset("train", transforms=tr)
@@ -131,7 +131,7 @@ def main():
     # optimizer = Adam(model.parameters(), lr=0.001)
     loss = nn.CrossEntropyLoss()
 
-    max_epoch = 20
+    max_epoch = 50
     train(model, train_loader, val_loader, optimizer, loss, max_epoch, device)
 
 

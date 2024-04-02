@@ -9,8 +9,10 @@ class VGG16(nn.Module):
         # Freeze parameters
         for param in self.vgg16.parameters():
             param.requires_grad = False
-
-        self.vgg16.classifier[-1] = nn.Linear(self.vgg16.classifier[-1].in_features, class_count)
+        
+        self.fc = nn.Linear(1000, class_count)
 
     def forward(self, image):
-        return self.vgg16(image)
+        out = self.vgg16(image)
+        out = self.fc(out)
+        return out
