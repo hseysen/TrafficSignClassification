@@ -42,27 +42,36 @@ def test(model, data, device):
     tq.close()
     print("F1 score: ", f1(torch.tensor(f1_list), torch.tensor(f1t_list)))
 
-    cm = confusion_matrix(y_true, y_pred)
-    if not os.path.exists("confusion_matrices"):
-        os.mkdir("confusion_matrices")
-    np.savetxt("confusion_matrices/final.txt", cm, fmt="%d")
+    # cm = confusion_matrix(y_true, y_pred)
+    # if not os.path.exists("confusion_matrices"):
+    #     os.mkdir("confusion_matrices")
+    # np.savetxt("confusion_matrices/final.txt", cm, fmt="%d")
 
     return None
 
 def main():
-    global test_data
     device = "cuda:0"
 
-    test_data = TrafficSignDataset("test")
-    test_loader = DataLoader(test_data, batch_size=8)
+    for data_batch in ["train", "valid", "test"]:
+        test_data = TrafficSignDataset(data_batch)
+        test_loader = DataLoader(test_data, batch_size=8)
 
-    model = Resnet(54).to(device)
-    # model = VGG16(54).to(device)
+        # VGG Models
+        for vggmodel in ["vgg16_sgd", "vgg16_adam"]:
+            print(f"Testing {data_batch}, model_{vggmodel}.pth")
+            vgg = VGG16(54).to(device)
+            checkpoint = torch.load(f"checkpoints/model_{vggmodel}.pth")
+            vgg.load_state_dict(checkpoint["state_dict"])
+            test(vgg, test_loader, device)
+        
+        # ResNet Models
+        for resnetmodel in ["resnet18_sgd", "resnet18_adam", "final"]:
+            print(f"Testing {data_batch}, model_{resnetmodel}.pth")
+            resnet = Resnet(54).to(device)
+            checkpoint = torch.load(f"checkpoints/model_{resnetmodel}.pth")
+            resnet.load_state_dict(checkpoint["state_dict"])
+            test(resnet, test_loader, device)
 
-    checkpoint = torch.load("checkpoints/model_final.pth")
-    model.load_state_dict(checkpoint["state_dict"])
-
-    test(model, test_loader, device)
 
 if __name__ == "__main__":
     main()
