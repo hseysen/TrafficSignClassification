@@ -1,0 +1,6 @@
+Model,Optimizer,Loss,.pth file,Epochs,Test F1 Score,Additional
+VGG16,SGD,CE,model_vgg16_sgd.pth,50,0.4845,None
+VGG16,Adam,CE,model_vgg16_adam.pth,50,0.4122,None
+ResNet18,SGD,CE,model_resnet18_sgd.pth,50,0.5777,None
+ResNet18,Adam,CE,model_resnet18_adam.pth,50,0.6008,None
+ResNet18,Adam,CE,model_final.pth,100,0.6409,ReduceLROnPlateau
