@@ -7,6 +7,7 @@ from torchmetrics import F1Score
 from torchvision import transforms
 from torch.utils.data import DataLoader
 from torch.optim import SGD, Adam
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 from datasets.dataset_retrieval import TrafficSignDataset
 from models.ResnetModel import Resnet
 from models.VGGModel import VGG16
@@ -14,7 +15,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 
 MODEL_PATH = "checkpoints/"
-PTH_NAME = f"model_vgg16_sgd.pth"
+PTH_NAME = f"model_final.pth"
 
 
 def val(model, data_val, loss_function, writer, epoch, device):
@@ -54,7 +55,7 @@ def val(model, data_val, loss_function, writer, epoch, device):
     tq.close()
     print(f"F1 score: {f1score}")
 
-    return None
+    return total_loss / len(data_val)
 
 
 def train(model, train_loader, val_loader, optimizer, loss_fn, n_epochs, device):
@@ -62,6 +63,9 @@ def train(model, train_loader, val_loader, optimizer, loss_fn, n_epochs, device)
 
     model.to(device)
     model.train()
+
+    scheduler = ReduceLROnPlateau(optimizer, mode='min', patience=5, factor=0.7)
+
     for epoch in range(n_epochs):
         model.train()
         tq = tqdm.tqdm(total=len(train_loader))
@@ -97,7 +101,10 @@ def train(model, train_loader, val_loader, optimizer, loss_fn, n_epochs, device)
         print(f"Epoch [{epoch + 1} / {n_epochs}], Loss: {epoch_loss:.4f}")
         
         # Check the performance of the model on unseen dataset
-        val(model, val_loader, loss_fn, writer, epoch, device)
+        val_loss = val(model, val_loader, loss_fn, writer, epoch, device)
+        
+        scheduler.step(val_loss)
+        print(f"Epoch [{epoch + 1} / {n_epochs}], Learning Rate: {scheduler.get_last_lr()}")
         
         # Save the model in ".pth" format
         checkpoint = {
@@ -125,13 +132,13 @@ def main():
     train_loader = DataLoader(train_data, batch_size=4, shuffle=True)
     val_loader = DataLoader(val_data, batch_size=2, drop_last=True)
 
-    # model = Resnet(54).to(device)
-    model = VGG16(54).to(device)
-    optimizer = SGD(model.parameters(), lr=0.001)
-    # optimizer = Adam(model.parameters(), lr=0.001)
+    model = Resnet(54).to(device)
+    # model = VGG16(54).to(device)
+    # optimizer = SGD(model.parameters(), lr=0.001)
+    optimizer = Adam(model.parameters(), lr=0.001)
     loss = nn.CrossEntropyLoss()
 
-    max_epoch = 50
+    max_epoch = 100
     train(model, train_loader, val_loader, optimizer, loss, max_epoch, device)
 
 
