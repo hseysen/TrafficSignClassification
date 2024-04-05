@@ -1,2 +1,2 @@
-<h1> Traffic Sign Classification Project </h1>
+# Traffic Sign Classification Project
 Report with all details is [here](/TrafficSignClassification.pdf)
