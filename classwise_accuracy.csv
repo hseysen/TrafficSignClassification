@@ -1,0 +1,54 @@
+Class Name,True Positives,False Positives
+Speed limit (5km/h),6,1
+Speed limit (15km/h),5,1
+Speed limit (30km/h),11,19
+Speed limit (40km/h),26,16
+Speed limit (50km/h),10,19
+Speed limit (60km/h),4,21
+Speed limit (70km/h),1,14
+Speed limit (80km/h),17,8
+Dont Go straight or left,7,0
+Dont Go straight,30,0
+Dont Go Left,42,23
+Dont Go Left or Right,11,0
+Dont Go Right,13,33
+Dont overtake from Left,4,2
+No Uturn,2,16
+No Car,31,7
+No horn,9,33
+Go straight or right,1,0
+Go straight,3,3
+Go Left,3,1
+Go Left or right,3,2
+Go Right,8,5
+Keep Left,1,0
+Keep Right,55,12
+Roundabout mandatory,9,3
+Watch out for cars,31,3
+Horn,13,0
+Bicycles crossing,18,5
+Uturn,9,0
+Road Divider,1,0
+Danger Ahead,0,4
+Zebra Crossing,19,4
+Children crossing,9,4
+Dangerous curve to the left,3,17
+Dangerous curve to the right,6,9
+Unknown1,2,2
+Unknown2,0,4
+Unknown3,5,4
+Go right or straight,15,43
+Go left or straight,8,4
+Unknown4,1,0
+ZigZag Curve,6,1
+Train Crossing,5,0
+Under Construction,3,0
+Unknown5,16,5
+Fences,7,3
+Heavy Vehicle Accidents,2,0
+Unknown6,15,0
+Give Way,1,0
+No stopping,85,3
+No entry,29,0
+Unknown7,16,4
+Unknown8,2,0
